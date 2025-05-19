@@ -17,8 +17,9 @@ FBPro Audit Test Automation Package allows you to create compliance reports for 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -D -t $RPM_BUILD_ROOT/opt/microsoft/powershell/7/Modules/ATAPAuditor ATAPAuditor/*
-install -D -t $RPM_BUILD_ROOT/opt/microsoft/powershell/7/Modules/ATAPHtmlReport ATAPHtmlReport/*
+mkdir -p $RPM_BUILD_ROOT/opt/microsoft/powershell/7/Modules
+cp -r -t $RPM_BUILD_ROOT/opt/microsoft/powershell/7/Modules ATAPAuditor
+cp -r -t $RPM_BUILD_ROOT/opt/microsoft/powershell/7/Modules ATAPHtmlReport
 
 %clean
 rm -rf $RPM_BUILD_ROOT
