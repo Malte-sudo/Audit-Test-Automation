@@ -1,13 +1,13 @@
-Name: ATAP
+Name: AuditTAP
 Version: <version>
 Release: 1%{?dist}
-Summary: AUDIT Test for Hardening
+Summary: creates compliance reports compared to international security standards and hardening guidelines
 BuildArch: noarch
 
-License: Redistributable, no modification permitted
+License: BSD 3-Clause License
 Source0: %{name}-%{version}.tar.gz
 
-Requires: powershell >= 5
+Requires: powershell >= 5.1
 
 %description
 FBPro Audit Test Automation Package allows you to create compliance reports for your systems. The resulting HTML-reports provide a transparent overview of your devices' security configuration compared to international security standards and hardening guides.
@@ -29,5 +29,5 @@ rm -rf $RPM_BUILD_ROOT
 /opt/microsoft/powershell/7/Modules/ATAPHtmlReport/
 
 %changelog
-* <date> Malte Lukas <malte.lukas@fb-pro.com> - <version>
-- <massage>
+* <date> FBPro GmbH <team@fb-pro.com> - <version>
+- <message>

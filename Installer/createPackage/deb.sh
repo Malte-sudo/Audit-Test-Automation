@@ -4,7 +4,7 @@
 
 [[ $# -ne 2 ]] && echo "need release tag and release massage" && exit 1
 
-name="ATAP"
+name="AuditTAP"
 
 tmp=$(mktemp --tmpdir -d ATAPXXXXXXX)
 scriptDir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
@@ -27,11 +27,12 @@ DATE=$(date -R)
 sed -i "s/<version>/($1)/ ; s/<massage>/$2/ ; s/<DATE>/$DATE/" "$changelog"
 gzip --best -n "$changelog"
 sed -i "s/<version>/$1/" "$control"
+echo -n "License: ""$(cat LICENSE)" >> "$control"
 
 
 # create & move package and remove dir structure
 dpkg-deb --root-owner-group --build "$tmpFolder" &>/dev/null
-mv "$tmp/$name.deb" ./$name.deb && echo "$name.deb successfully created"
+mv "$tmp/$name.deb" ./$name-$1.deb && echo "$name.deb successfully created"
 rm -r $tmp
 
 

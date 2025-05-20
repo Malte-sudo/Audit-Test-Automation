@@ -4,7 +4,7 @@
 
 [[ $# -ne 2 ]] && echo "need release tag and release massage" && exit 1
 
-name="ATAP"
+name="AuditTAP"
 
 tmp=$(mktemp --tmpdir -d ATAPXXXXXXX)
 scriptDir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
@@ -34,12 +34,12 @@ cd $callDir
 
 # ready changelogentry for spec
 date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z")
-sed "s/<version>/$1/ ; s/<massage>/$2/ ; s/<date>/$date/" $specForm > $spec
+sed "s/<version>/$1/ ; s/<message>/$2/ ; s/<date>/$date/" $specForm > $spec
 
 
 # build & move rpm package and rm dir structure
 rpmbuild --define "_topdir $tmp/rpmbuild" -ba $spec &>/dev/null
-mv $package ./$name.rpm && echo "successfully created $name.rpm"
+mv $package ./$name-$1.rpm && echo "successfully created $name.rpm"
 rm -r $tmp
 
 exit 0
