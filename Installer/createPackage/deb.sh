@@ -25,13 +25,14 @@ cp -r -t $modules "$scriptDir/../../ATAPAuditor" "$scriptDir/../../ATAPHtmlRepor
 rm "$modules/nonempty"
 DATE=$(date -R)
 sed -i "s/<version>/($1)/ ; s/<massage>/"$2"/ ; s/<DATE>/$DATE/" "$changelog"
+echo "specs: $(cat $changelog)"
 gzip --best -n "$changelog"
 sed -i "s/<version>/$1/" "$control"
 echo -n "License: ""$(cat LICENSE)" >> "$control"
 
 
 # create & move package and remove dir structure
-dpkg-deb --root-owner-group --build "$tmpFolder" &>/dev/null
+dpkg-deb --root-owner-group --build "$tmpFolder" # &>/dev/null
 mv "$tmp/$name.deb" ./$name-$1.deb && echo "$name.deb successfully created"
 rm -r $tmp
 

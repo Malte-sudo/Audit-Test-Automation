@@ -35,10 +35,11 @@ cd $callDir
 # ready changelogentry for spec
 date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z")
 sed "s/<version>/$1/ ; s/<message>/"$2"/ ; s/<date>/$date/" $specForm > $spec
+echo "specs: $(cat $spec)"
 
 
 # build & move rpm package and rm dir structure
-rpmbuild --define "_topdir $tmp/rpmbuild" -ba $spec &>/dev/null
+rpmbuild --define "_topdir $tmp/rpmbuild" -ba $spec # &>/dev/null
 mv $package ./$name-$1.rpm && echo "successfully created $name.rpm"
 rm -r $tmp
 
