@@ -34,7 +34,7 @@ cd $callDir
 
 # ready changelogentry for spec
 date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z")
-sed "s/<version>/$1/ ; s/<message>/$2/ ; s/<date>/$date/" $specForm > $spec
+sed "s/<version>/$1/ ; s/<message>/"$2"/ ; s/<date>/$date/" $specForm > $spec
 
 
 # build & move rpm package and rm dir structure

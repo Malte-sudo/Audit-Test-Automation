@@ -24,7 +24,7 @@ cp -r -t $tmpFolder $assets
 cp -r -t $modules "$scriptDir/../../ATAPAuditor" "$scriptDir/../../ATAPHtmlReport"
 rm "$modules/nonempty"
 DATE=$(date -R)
-sed -i "s/<version>/($1)/ ; s/<massage>/$2/ ; s/<DATE>/$DATE/" "$changelog"
+sed -i "s/<version>/($1)/ ; s/<massage>/"$2"/ ; s/<DATE>/$DATE/" "$changelog"
 gzip --best -n "$changelog"
 sed -i "s/<version>/$1/" "$control"
 echo -n "License: ""$(cat LICENSE)" >> "$control"
