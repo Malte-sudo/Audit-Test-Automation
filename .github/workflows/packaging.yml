@@ -46,3 +46,13 @@ jobs:
       
       - name: cleanup
         run: rm ATAP.rpm
+  
+  setup_job:
+    name: upload windows installer
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: upload setup.exe
+        run: gh release upload $tag Installer/setup.exe --clobber
