@@ -24,9 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create .deb file
-        run: |
-          echo "$release_message"
-          bash ./Installer/createPackage/deb.sh $tag "$release_message"
+        run: bash ./Installer/createPackage/deb.sh $tag "$release_message"
 
       - name: uploade .deb file to assets
         run: gh release upload $tag AuditTAP-$tag.deb --clobber
@@ -42,9 +40,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create .rpm file
-        run: |
-          echo "$release_message"
-          bash ./Installer/createPackage/rpm.sh $tag "$release_message"
+        run: bash ./Installer/createPackage/rpm.sh $tag "$release_message"
 
       - name: uploade .rpm file to assets
         run: gh release upload $tag AuditTAP-$tag.rpm --clobber

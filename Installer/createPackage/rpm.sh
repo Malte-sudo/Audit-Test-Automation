@@ -39,12 +39,11 @@ while read x; do # multiline replace with all special characters
     [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+')
     sed -i "s/<message>/$x\n<message>/" $spec
 done <<< $2
-sed -i 's/<message>//' $1
-echo "specs: $(cat $spec)"
+sed -i 's/<message>//' $spec
 
 
 # build & move rpm package and rm dir structure
-rpmbuild --define "_topdir $tmp/rpmbuild" -ba $spec # &>/dev/null
+rpmbuild --define "_topdir $tmp/rpmbuild" -ba $spec &>/dev/null
 mv $package ./$name-$1.rpm && echo "successfully created $name.rpm"
 rm -r $tmp
 

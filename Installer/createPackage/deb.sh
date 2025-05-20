@@ -27,16 +27,15 @@ DATE=$(date -R)
 sed -i "s/<version>/($1)/ ; s/<DATE>/$DATE/" "$changelog"
 while read x; do # multiline replace with all special characters
     [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+')
-    sed -i "s/<message>/$x\n<message>/" $1
+    sed -i "s/<message>/$x\n<message>/" $changelog
 done <<< $2
-sed -i 's/<message>//' $1
+sed -i 's/<message>//' $changelog
 gzip --best -n "$changelog"
 sed -i "s/<version>/$1/" "$control"
-echo -n "License: ""$(cat LICENSE)" >> "$control"
 
 
 # create & move package and remove dir structure
-dpkg-deb --root-owner-group --build "$tmpFolder" # &>/dev/null
+dpkg-deb --root-owner-group --build "$tmpFolder" &>/dev/null
 mv "$tmp/$name.deb" ./$name-$1.deb && echo "$name.deb successfully created"
 rm -r $tmp
 
