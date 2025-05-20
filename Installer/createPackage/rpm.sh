@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# args: releasetag massage?
+# args: releasetag changelogmessage
 
-[[ $# -ne 2 ]] && echo "need release tag and release massage" && exit 1
+[[ $# -ne 2 ]] && echo "need release tag and release message" && exit 1
 
 name="AuditTAP"
 
@@ -34,7 +34,12 @@ cd $callDir
 
 # ready changelogentry for spec
 date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z")
-sed "s/<version>/$1/ ; s/<message>/"$2"/ ; s/<date>/$date/" $specForm > $spec
+sed "s/<version>/$1/ ; s/<date>/$date/" $specForm > $spec
+while read x; do # multiline replace with all special characters
+    [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+')
+    sed -i "s/<message>/$x\n<message>/" $spec
+done <<< $2
+sed -i 's/<message>//' $1
 echo "specs: $(cat $spec)"
 
 

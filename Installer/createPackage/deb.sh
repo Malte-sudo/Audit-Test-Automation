@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# args: releasetag massage?
+# args: releasetag changelogmessage
 
 [[ $# -ne 2 ]] && echo "need release tag and release massage" && exit 1
 
@@ -24,8 +24,12 @@ cp -r -t $tmpFolder $assets
 cp -r -t $modules "$scriptDir/../../ATAPAuditor" "$scriptDir/../../ATAPHtmlReport"
 rm "$modules/nonempty"
 DATE=$(date -R)
-sed -i "s/<version>/($1)/ ; s/<massage>/"$2"/ ; s/<DATE>/$DATE/" "$changelog"
-echo "specs: $(cat $changelog)"
+sed -i "s/<version>/($1)/ ; s/<DATE>/$DATE/" "$changelog"
+while read x; do # multiline replace with all special characters
+    [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+')
+    sed -i "s/<message>/$x\n<message>/" $1
+done <<< $2
+sed -i 's/<message>//' $1
 gzip --best -n "$changelog"
 sed -i "s/<version>/$1/" "$control"
 echo -n "License: ""$(cat LICENSE)" >> "$control"
