@@ -36,7 +36,7 @@ cd $callDir
 date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z")
 sed "s/<version>/$1/ ; s/<date>/$date/" $specForm > $spec
 while read x; do # multiline replace with all special characters
-    [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+')
+    [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+g')
     sed -i "s/<message>/$x\n<message>/" $spec
 done <<< $2
 sed -i 's/<message>//' $spec

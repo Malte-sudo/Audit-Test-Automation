@@ -26,7 +26,7 @@ cp -r -t $modules "$scriptDir/../../ATAPAuditor" "$scriptDir/../../ATAPHtmlRepor
 DATE=$(date -R)
 sed -i "s/<version>/($1)/ ; s/<DATE>/$DATE/" "$changelog"
 while read x; do # multiline replace with all special characters
-    [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+')
+    [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+g')
     sed -i "s/<message>/$x\n<message>/" $changelog
 done <<< $2
 sed -i 's/<message>//' $changelog
