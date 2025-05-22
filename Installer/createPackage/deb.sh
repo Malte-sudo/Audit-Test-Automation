@@ -23,13 +23,13 @@ cp -r -t $tmpFolder $assets
 
 # copie needed files, create changelog with releasetag, update control Version
 cp -r -t $modules "$scriptDir/../../ATAPAuditor" "$scriptDir/../../ATAPHtmlReport"
-DATE=$(date -R)
+DATE=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z") # github runner only knows de
 sed -i "s/<version>/($1)/ ; s/<DATE>/$DATE/" "$changelog"
 while read x; do # multiline replace with all special characters
     [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+g')
-    sed -i "s/<message>/$x\n<message>/" $changelog
+    sed -i "s/<message>/$x\n    <message>/" $changelog
 done <<< $2
-sed -i 's/<message>//' $changelog
+sed -i 's/    <message>//' $changelog
 gzip --best -n "$changelog"
 sed -i "s/<version>/$1/" "$control"
 echo "License: $(cat LICENSE)" >> $copyright

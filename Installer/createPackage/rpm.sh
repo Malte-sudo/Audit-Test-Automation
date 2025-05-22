@@ -33,13 +33,13 @@ cd $callDir
 
 
 # ready changelogentry for spec
-date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z")
+date=$(LANG=en_US date +"%a %b %d %Y %H:%M:%S %z") # github runner only knows de
 sed "s/<version>/$1/ ; s/<date>/$date/" $specForm > $spec
 while read x; do # multiline replace with all special characters
     [[ "$x" =~ "/" ]] && x=$(echo $x | sed 's+/+\\\/+g')
-    sed -i "s/<message>/$x\n<message>/" $spec
+    sed -i "s/<message>/$x\n  <message>/" $spec
 done <<< $2
-sed -i 's/<message>//' $spec
+sed -i 's/  <message>//' $spec
 
 
 # build & move rpm package and rm dir structure
