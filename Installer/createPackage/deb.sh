@@ -31,6 +31,7 @@ while read x; do # multiline replace with all special characters
 done <<< $2
 sed -i 's/    <message>//' $changelog
 gzip --best -n "$changelog"
+VERSION=$(echo $1 | sed "s/[a-zA-Z]//g")
 sed -i "s/<version>/$1/" "$control"
 echo "License: $(cat LICENSE)" >> $copyright
 
