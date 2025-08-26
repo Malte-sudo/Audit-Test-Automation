@@ -32,7 +32,7 @@ done <<< $2
 sed -i 's/    <message>//' $changelog
 gzip --best -n "$changelog"
 VERSION=$(echo $1 | sed "s/[a-zA-Z]//g")
-sed -i "s/<version>/$1/" "$control"
+sed -i "s/<version>/$VERSION/" "$control"
 echo "License: $(cat LICENSE)" >> $copyright
 
 
